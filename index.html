@@ -1,1 +1,178 @@
 # webcal
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content=""/>
+		<meta name="keywords" content=""/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5"></meta>
+		<title></title>
+
+<style type="text/css">
+
+body {
+font-family:Arial, sans-serif;
+}
+
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-top-width:1px;border-bottom-width:1px;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-top-width:1px;border-bottom-width:1px;}
+
+
+.tg td {
+font-size: 20px;
+}
+
+input {
+text-align: center;
+width: 60px;
+font-size: 22px;
+}
+
+img {
+height: 90px;
+width: auto;
+}
+
+h5 {
+margin-top: 0px;
+}
+
+@media screen and (max-width: 320px) {
+
+img {
+width: 100%;
+height: auto;
+
+}
+
+}
+
+
+
+
+</style>
+
+
+    <script type="text/javascript">
+
+function RetireFund() {           	
+var CurrAge = parseInt(document.getElementById('CurrAge').value);
+var RetireAge = parseInt(document.getElementById('RetireAge').value);
+var RetireIncome = parseInt(document.getElementById('RetireIncome').value);
+var LifeExpect = parseInt(document.getElementById('LifeExpect').value);
+var RetireReturn = parseInt(document.getElementById('RetireReturn').value);
+var Inflation = parseInt(document.getElementById('Inflation').value);
+
+var CurrAge1 = CurrAge + 1;
+var RetireAge1 = RetireAge - 1;
+var RetireAge2 = RetireAge + 1;
+var LifeExpect1 = LifeExpect -1;
+
+var input1 = document.getElementById("CurrAge");
+input1.setAttribute("max",RetireAge1 ); 
+
+var input2 = document.getElementById("RetireAge");
+input2.setAttribute("min",CurrAge1 ); 
+
+var input3 = document.getElementById("RetireAge");
+input3.setAttribute("max",LifeExpect1 ); 
+
+var input4 = document.getElementById("LifeExpect");
+input4.setAttribute("min",RetireAge2 ); 
+
+var YearsToRetire = RetireAge - CurrAge;
+
+var RetiredYears = LifeExpect - RetireAge;
+
+
+var RetireIncomeInflAdjust = RetireIncome * Math.pow (1+Inflation/100, YearsToRetire);
+
+
+var NetRate = (1 + RetireReturn/100)/ (1 + Inflation/100) -1;
+
+var RetireFund1 = -((((1 - Math.pow(1 + NetRate, RetiredYears)) / NetRate) * (RetireIncomeInflAdjust/ (1+ Inflation/100)) * (1 + NetRate * 1) - 0) / Math.pow(1 + NetRate, RetiredYears)).toFixed(2);
+
+
+if (RetireAge > CurrAge && LifeExpect > RetireAge) {
+document.getElementById('RetireFund').innerHTML= "Amount Needed at Retirement: " + RetireFund1 + " lakhs";
+} else {
+document.getElementById('RetireFund').innerHTML= " " ;
+}
+
+}
+</script> 
+
+
+	</head>
+
+	<body>
+
+	<header>
+
+<img src = "CalcHeader1.png";>
+</img>
+<h5> Enter these details and see the answer below</h5>
+	</header>
+	
+	
+	
+	<table class="tg" style="undefined;table-layout: fixed;">
+<colgroup>
+<col style="width: 257px">
+<col style="width: 70px">
+<col name="col3" style="width: 100px">
+</colgroup>
+  <tr>
+    <td class="tg-031e">Your current age</td>
+    <td class="tg-031e">                       
+	<input id="CurrAge" type="number"  "min="20" max=" 100" value = "35" step="1" oninput ="RetireFund()"/>
+	</td>
+	<td class="tg-031e">years</td>
+    </tr>
+  <tr>
+    <td class="tg-031e">Likely age of retirement</td>
+    <td class="tg-031e">                       
+	<input id="RetireAge" type="number"  max=" 100" value = "65" step="1" oninput="RetireFund()" />
+	</td>
+	<td class="tg-031e">years</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">At today's costs, the amount you would like to spend each year of retirement (in lakhs)</td>
+    <td class="tg-031e">                       
+	<input id="RetireIncome" type="number"  min = "1" max=" 100" value = "10" step="1" oninput="RetireFund()" />
+	</td>
+	<td class="tg-031e">lakhs p.a.</td>
+  </tr>
+ <tr>
+    <td class="tg-031e">Your estimate of life expectancy</td>
+    <td class="tg-031e">
+    <input id="LifeExpect" type="number"  max=" 100" value = "97" step="1" oninput="RetireFund()" />
+	</td>
+	<td class="tg-031e">years</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">The rate of return you expect to earn on your investments, during retirement, after taxes (% p.a.)</td>
+    <td class="tg-031e">
+    <input id="RetireReturn" type="number"  min = "3" max="20" value = "7" step="0.5" oninput="RetireFund()" />
+	</td>
+	<td class="tg-031e">% p.a.</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Your estimate of inflation (% p.a.)</td>
+    <td class="tg-031e">
+    <input id="Inflation" type="number"  min = "3" max="15" value = "6" step="0.5" oninput="RetireFund()" />
+	</td>
+	<td class="tg-031e">% p.a.</td>
+  </tr>
+    
+  
+</table>
+
+<h3 id="RetireFund">  </h3>
+
+
+			
+	</body>
+</html>
